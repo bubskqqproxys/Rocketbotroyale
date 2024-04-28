@@ -1,0 +1,16 @@
+# Exported from Render on 2024-04-27T04:09:07Z
+services:
+- type: web
+  name: Rocketbotroyale-tytyty
+  runtime: node
+  repo: https://github.com/YTCozmo/Rocketbotroyale
+  plan: free
+  region: ohio
+  buildCommand: node index.js
+  startCommand: node indxex.js
+  domains:
+  - www.rocketroyalebot222.com
+  - rocketroyalebot222.com
+  autoDeploy: false
+  pullRequestPreviewsEnabled: true
+version: "1"
