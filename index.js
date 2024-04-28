@@ -15,10 +15,24 @@ app.get("/*", (req, res, next) => {
 });
 
 function forwardRequest(url, req, res) {
-  https.request(new URL(url), (resp) => {
-    res.contentType(resp.headers["content-type"]);
-    resp.pipe(res);
-  }).end();
+  https.get(url, (resp) => {
+    let data = '';
+
+    resp.on('data', (chunk) => {
+      data += chunk;
+    });
+
+    resp.on('end', () => {
+      res.writeHead(resp.statusCode, resp.headers);
+      res.write(data);
+      res.end();
+    });
+  }).on('error', (err) => {
+    console.error('Error:', err);
+    res.status(500).send('Something went wrong!');
+  });
 }
 
-app.listen(3000);
+app.listen(3000, () => {
+  console.log('Proxy server is running on port 3000');
+});
